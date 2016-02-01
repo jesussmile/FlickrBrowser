@@ -36,6 +36,13 @@ public class GetRawData {
 
     }
 
+    //create setter for rawUrl in GetRawData.java
+
+
+    public void setmRawUrl(String mRawUrl) {
+        this.mRawUrl = mRawUrl;
+    }
+
     //getters is used to access form outside of the class
     public String getmData() {
         return mData;
