@@ -27,6 +27,7 @@ public class GetRawData {
     private String mData;
     private DownloadStatus mDownloadStatus;
 
+    //constructor
     //getting URL
     public GetRawData(String mRawUrl) {
         this.mRawUrl = mRawUrl;
