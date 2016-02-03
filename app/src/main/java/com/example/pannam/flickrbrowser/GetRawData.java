@@ -38,7 +38,8 @@ public class GetRawData {
 
     //create setter for rawUrl in GetRawData.java
 
-
+    //to be safe
+    //best practice to set url manually
     public void setmRawUrl(String mRawUrl) {
         this.mRawUrl = mRawUrl;
     }
@@ -62,7 +63,7 @@ public class GetRawData {
     }
 
     //start to get data from mainactivity
-    public void execute(){
+    public void execute() {
         //process
         this.mDownloadStatus = DownloadStatus.PROCESSING;
         //invoke Asynk Task
@@ -81,28 +82,24 @@ public class GetRawData {
 
 
             mData = webData;
-            Log.v(LOG_TAG,"Data returned :" +mData);
+            Log.v(LOG_TAG, "Data returned :" + mData);
             //mData will come back null only if the URL is not good
-            if(mData == null){
+            if (mData == null) {
                 //check if url is empty or wrong
-                if(mRawUrl== null){
+                if (mRawUrl == null) {
                     mDownloadStatus = DownloadStatus.NOT_INITIALISED;
-                }else{
+                } else {
                     mDownloadStatus = DownloadStatus.FAILED_OR_EMPTY;
                 }
-            }else{
+            } else {
                 //success download
                 mDownloadStatus = DownloadStatus.OK;
-
-
-
 
 
             }
 
 
         }
-
 
 
         @Override
