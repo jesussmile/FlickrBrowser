@@ -45,7 +45,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 //commit is saved
-                sharedPref.edit().putString(FLICKR_QUERY, query).commit();
+                sharedPref.edit().putString(FLICKR_QUERY, query).apply();
                 // clean the textview
                 mSearchView.clearFocus();
                 finish();

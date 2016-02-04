@@ -1,8 +1,10 @@
 package com.example.pannam.flickrbrowser;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Process;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -107,5 +109,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //on resume
+        //getting this from onQueryTextSubmit in SearchActivity
+        if(flickrRecyclerViewAdapter != null){
+            String query = getSavedPreferenceData(SearchActivity.FLICKR_QUERY);
+            if (query.length()>0){
+                ProcessPhotos processPhotos = new ProcessPhotos(query, true);
+                processPhotos.execute();
+            }
+        }
+
     }
+    private String getSavedPreferenceData(String key){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //if key is empty it will give "" or the key itself
+        return sharedPref.getString(key,"");
+
+    }
+
+
 }
