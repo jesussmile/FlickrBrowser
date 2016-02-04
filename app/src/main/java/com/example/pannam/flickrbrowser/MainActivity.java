@@ -1,5 +1,6 @@
 package com.example.pannam.flickrbrowser;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //initiate recycler view
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -67,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        //using newly created menu option
+        if(id ==R.id.menu_search){
+            //run SearchActivity class
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -95,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
