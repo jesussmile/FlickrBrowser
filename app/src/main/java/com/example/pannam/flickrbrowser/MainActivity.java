@@ -1,9 +1,11 @@
 package com.example.pannam.flickrbrowser;
 
 import android.os.Bundle;
+import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -29,12 +31,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //initiate recycler view
+        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ProcessPhotos processPhotos = new ProcessPhotos("pamela anderson",true);
+        processPhotos.execute();
+
 
         //calling Getrawdata class
      //   GetRawData theRawData = new GetRawData("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,lollipop&format=json&nojsoncallback=1");
        //checking
-        GetFlickrjsonData jsonData = new GetFlickrjsonData("android, lollipop",true);
-        jsonData.execute();
+      //  GetFlickrjsonData jsonData = new GetFlickrjsonData("android, lollipop",true);
+        //jsonData.execute();
 
 
 
