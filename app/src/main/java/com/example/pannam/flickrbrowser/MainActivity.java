@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         //initiate recycler view
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ProcessPhotos processPhotos = new ProcessPhotos("pamela anderson",true);
+        ProcessPhotos processPhotos = new ProcessPhotos("Burmese cat",true);
         processPhotos.execute();
 
 
