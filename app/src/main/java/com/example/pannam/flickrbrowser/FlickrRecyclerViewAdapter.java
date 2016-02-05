@@ -69,4 +69,14 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageV
 
         return (null != mPhotoList ? mPhotoList.size() : 0);
     }
+    //creating this method so we can move the recycler create process from async task to oncreate
+    //in mainactivity
+
+
+    public void loadNewData(List<Photo>newPhotos){
+        mPhotoList = newPhotos;
+        //reprocess the intire file and redraw on the screen automatically
+        notifyDataSetChanged();
+    }
+
 }

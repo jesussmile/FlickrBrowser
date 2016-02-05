@@ -38,8 +38,15 @@ public class MainActivity extends AppCompatActivity {
         //initiate recycler view
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ProcessPhotos processPhotos = new ProcessPhotos("Burmese cat",true);
-        processPhotos.execute();
+
+        //initialize with empty set of data
+        flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,new ArrayList<Photo>());
+        //attach adapter
+        mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
+
+
+//        ProcessPhotos processPhotos = new ProcessPhotos("Burmese cat",true);
+//        processPhotos.execute();
 
 
         //calling Getrawdata class
@@ -99,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String webData) {
                 super.onPostExecute(webData);
-                flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,getMPhotos());
-                mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
+//                flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,getMPhotos());
+//                mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
+
+                flickrRecyclerViewAdapter.loadNewData(getMPhotos());
             }
         }
     }
@@ -111,13 +120,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //on resume
         //getting this from onQueryTextSubmit in SearchActivity
-        if(flickrRecyclerViewAdapter != null){
+//        if(flickrRecyclerViewAdapter != null){
             String query = getSavedPreferenceData(SearchActivity.FLICKR_QUERY);
             if (query.length()>0){
                 ProcessPhotos processPhotos = new ProcessPhotos(query, true);
                 processPhotos.execute();
             }
-        }
+//        }
 
     }
     private String getSavedPreferenceData(String key){
