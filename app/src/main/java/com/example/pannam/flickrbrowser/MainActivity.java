@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = "MainActivity";
     //comes from Json parser
     private List<Photo> mPhotoList = new ArrayList<Photo>();
-    private RecyclerView mRecyclerView ;
+    private RecyclerView mRecyclerView;
     //adapter
     private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
 
@@ -36,13 +37,27 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //initiate recycler view
-        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //initialize with empty set of data
-        flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,new ArrayList<Photo>());
+        flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this, new ArrayList<Photo>());
         //attach adapter
         mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
+        //implement RecyclrItemClickListener
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, mRecyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Toast.makeText(MainActivity.this, "Short TAP", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+                        Toast.makeText(MainActivity.this, "Long TAPPY", Toast.LENGTH_LONG).show();
+                    }
+                }));
 
 
 //        ProcessPhotos processPhotos = new ProcessPhotos("Burmese cat",true);
@@ -50,11 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         //calling Getrawdata class
-     //   GetRawData theRawData = new GetRawData("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,lollipop&format=json&nojsoncallback=1");
-       //checking
-      //  GetFlickrjsonData jsonData = new GetFlickrjsonData("android, lollipop",true);
+        //   GetRawData theRawData = new GetRawData("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,lollipop&format=json&nojsoncallback=1");
+        //checking
+        //  GetFlickrjsonData jsonData = new GetFlickrjsonData("android, lollipop",true);
         //jsonData.execute();
-
 
 
     }
@@ -79,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //using newly created menu option
-        if(id ==R.id.menu_search){
+        if (id == R.id.menu_search) {
             //run SearchActivity class
             Intent intent = new Intent(this, SearchActivity.class);
             startActivity(intent);
@@ -89,20 +103,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CREATE async task within the method
-    public class ProcessPhotos extends GetFlickrjsonData{
+    public class ProcessPhotos extends GetFlickrjsonData {
 
         //initialize json data
         public ProcessPhotos(String searchCriteria, boolean matchAll) {
             super(searchCriteria, matchAll);
         }
 
-        public void execute(){
+        public void execute() {
             super.execute();
-            ProcessData processData= new ProcessData();
+            ProcessData processData = new ProcessData();
             processData.execute();
         }
 
-        public class ProcessData extends DownloadJsonData{
+        public class ProcessData extends DownloadJsonData {
             @Override
             protected void onPostExecute(String webData) {
                 super.onPostExecute(webData);
@@ -121,18 +135,19 @@ public class MainActivity extends AppCompatActivity {
         //on resume
         //getting this from onQueryTextSubmit in SearchActivity
 //        if(flickrRecyclerViewAdapter != null){
-            String query = getSavedPreferenceData(SearchActivity.FLICKR_QUERY);
-            if (query.length()>0){
-                ProcessPhotos processPhotos = new ProcessPhotos(query, true);
-                processPhotos.execute();
-            }
+        String query = getSavedPreferenceData(SearchActivity.FLICKR_QUERY);
+        if (query.length() > 0) {
+            ProcessPhotos processPhotos = new ProcessPhotos(query, true);
+            processPhotos.execute();
+        }
 //        }
 
     }
-    private String getSavedPreferenceData(String key){
+
+    private String getSavedPreferenceData(String key) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         //if key is empty it will give "" or the key itself
-        return sharedPref.getString(key,"");
+        return sharedPref.getString(key, "");
 
     }
 
