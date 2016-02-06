@@ -18,6 +18,8 @@ public class SearchActivity extends AppCompatActivity {
     private SearchView mSearchView;
 
     public static final String FLICKR_QUERY = "FLICKR_QUERY";
+    //we dont have  a base activity as mentioned in the tutorial hence we are adding it here
+    public static final String PHOTO_TRANSFER = "PHOTO_TRANSFER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

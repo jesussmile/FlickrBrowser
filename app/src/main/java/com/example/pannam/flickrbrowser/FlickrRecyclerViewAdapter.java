@@ -48,7 +48,7 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageV
     public void onBindViewHolder(FlickrImageViewHolder holder, int position) {
         //position tells the index position that is drawn in the screen at this time
         Photo photoItem = mPhotoList.get(position);
-        Picasso.with(mContext).load(photoItem.getmImages())
+        Picasso.with(mContext).load(photoItem.getImages())
                 //if error show this image
                 .error(R.drawable.placeholder)
                 //while downloading show this image
@@ -56,7 +56,7 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageV
                 //it will then go to the thumbnail from browser.xml
                 .into(holder.thumbnail);
         //FOR THE TITLE
-        holder.mtitle.setText(photoItem.getmTitle());
+        holder.mtitle.setText(photoItem.getTitle());
 
 
 
@@ -77,6 +77,10 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageV
         mPhotoList = newPhotos;
         //reprocess the intire file and redraw on the screen automatically
         notifyDataSetChanged();
+    }
+    //position of the photos
+    public Photo getPhoto(int position){
+        return (null!= mPhotoList?mPhotoList.get(position):null);
     }
 
 }

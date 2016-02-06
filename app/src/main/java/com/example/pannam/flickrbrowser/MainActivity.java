@@ -55,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onItemLongClick(View view, int position) {
-                        Toast.makeText(MainActivity.this, "Long TAPPY", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(MainActivity.this, "Long TAPPY", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this,ViewPhotoDetailsActivity.class);
+                        //put extra is telling before putting forward the intent we want to add something to it
+                        intent.putExtra(SearchActivity.PHOTO_TRANSFER,flickrRecyclerViewAdapter.getPhoto(position));
+                        startActivity(intent);
                     }
                 }));
 
