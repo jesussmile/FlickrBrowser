@@ -147,12 +147,15 @@ public class GetFlickrjsonData extends GetRawData {
                 String title = jsonPhoto.getString(FLICKR_TITLE);
                 String author = jsonPhoto.getString(FLICKR_AUTHOR);
                 String authorId = jsonPhoto.getString(FLICKR_AUTHOR_ID);
-                String link = jsonPhoto.getString(FLICKR_LINK);
+              //flickr has a different way of showing photos it adds _b(larger photo) or _m(thumbnail) after the photo
+                //so the previously assumed link is wrong
+               // String link = jsonPhoto.getString(FLICKR_LINK);
                 String tags = jsonPhoto.getString(FLICKR_TAGS);
 
                 //there is a "m" in before URL.
                 JSONObject jsonMedia = jsonPhoto.getJSONObject(FLICKR_MEDIA);
                 String photoUrl = jsonMedia.getString(FLICKR_PHOTO_URL);
+                String link = photoUrl.replaceFirst("_m.","_b.");
 
                 //we have all the data to send to photo.java class
                 Photo photoObject = new Photo(title, author, authorId, link, tags, photoUrl);
